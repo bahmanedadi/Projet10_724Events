@@ -33,20 +33,11 @@ const Slider = () => {
   };
 
 
- useEffect(
-    () => {
-      const intervalId = setInterval(nextCard, 5000);
+  useEffect(() => {
+    const intervalId = setInterval(nextCard, 5000);
 
-
-     return () => clearInterval(intervalId);
-    },
-    // eslint-disable-next-line
-    [index, byDateDesc]
-    // useEffect : exécute la fonction nextCard toutes les 5 secondes
-    // clearInterval : arrête l'exécution de la fonction nextCard
-    // La dépendance [index, byDateDesc] indique que l'effet doit être réexécuté lorsque l'une de ces valeurs change.
-  );
-
+    return () => clearInterval(intervalId);
+  }, [index, byDateDesc]);
 
  return (
     <div className="SlideCardList">
