@@ -12,14 +12,21 @@ const Select = ({
   titleEmpty,
   label,
   type = "normal",
+  filter, // Nouvelle propriété pour le filtrage
 }) => {
   const [value, setValue] = useState();
   const [collapsed, setCollapsed] = useState(true);
+
+  const filteredSelection = filter
+    ? selection.filter((item) => filter(item, value))
+    : selection;
+
   const changeValue = (newValue) => {
-    onChange();
+    onChange(newValue);
     setValue(newValue);
     setCollapsed(newValue);
   };
+
   return (
     <div className={`SelectContainer ${type}`} data-testid="select-testid">
       {label && <div className="label">{label}</div>}
@@ -36,7 +43,7 @@ const Select = ({
                   Toutes
                 </li>
               )}
-              {selection.map((s) => (
+              {filteredSelection.map((s) => (
                 <li key={s} onClick={() => changeValue(s)}>
                   <input
                     defaultChecked={value === s}
@@ -88,6 +95,7 @@ Select.propTypes = {
   titleEmpty: PropTypes.bool,
   label: PropTypes.string,
   type: PropTypes.string,
+  filter: PropTypes.func, // PropTypes pour la fonction de filtrage
 };
 
 Select.defaultProps = {
@@ -96,6 +104,7 @@ Select.defaultProps = {
   label: "",
   type: "normal",
   name: "select",
+  filter: null, // Par défaut, pas de filtre
 };
 
 export default Select;
