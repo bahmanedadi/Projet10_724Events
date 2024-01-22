@@ -14,12 +14,17 @@ const Form = ({ onSuccess, onError }) => {
   const sendContact = useCallback(
     async (evt) => {
       evt.preventDefault();
+      console.log("Form submission started");
       setSending(true);
       // We try to call mockContactApi
       try {
+        console.log("Calling mockContactApi");
         await mockContactApi();
+        console.log("mockContactApi success");
         setSending(false);
+        onSuccess();
       } catch (err) {
+        console.error("mockContactApi error:", err);
         setSending(false);
         onError(err);
       }
@@ -34,7 +39,6 @@ const Form = ({ onSuccess, onError }) => {
           <Field placeholder="" label="Prénom" />
           <Select
             selection={["Personel", "Entreprise"]}
-            onChange={() => null}
             label="Personel / Entreprise"
             type="large"
             titleEmpty
