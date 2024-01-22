@@ -13,8 +13,21 @@ import Modal from "../../containers/Modal";
 import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
-  const {last} = useData()
-  return <>
+  const { data } = useData();
+  // const qui vient chercher la dernière prestation
+  const last =
+    data && data.events && data.events.length > 0
+      ? data.events.reduce((latest, current) => {
+          // Utiliser la date pour comparer et trouver la prestation la plus récente
+          const latestDate = new Date(latest.date);
+          const currentDate = new Date(current.date);
+
+
+          return currentDate > latestDate ? current : latest;
+        })
+      : null;
+  return (
+  <>
     <header>
       <Menu />
     </header>
@@ -114,16 +127,20 @@ const Page = () => {
       </div>
     </main>
     <footer className="row">
-      <div className="col presta">
-        <h3>Notre derniére prestation</h3>
-        <EventCard
-          imageSrc={last?.cover}
-          title={last?.title}
-          date={new Date(last?.date)}
-          small
-          label="boom"
-        />
-      </div>
+    <div className="col presta">
+          <h3>Notre derniére prestation</h3>
+          {last && (
+            <EventCard
+              data-testid="last-event-card"
+              imageSrc={last?.cover}
+              imageAlt={last?.description}
+              title={last?.title}
+              date={new Date(last?.date)}
+              small
+              label={last?.type}
+            />
+          )}
+        </div>
       <div className="col contact">
         <h3>Contactez-nous</h3>
         <address>45 avenue de la République, 75000 Paris</address>
@@ -155,6 +172,7 @@ const Page = () => {
       </div>
     </footer>
   </>
+  )
 }
 
 export default Page;
