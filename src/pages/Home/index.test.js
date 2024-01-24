@@ -22,6 +22,10 @@ describe("When Form is created", () => {
       );
       await screen.findByText("En cours");
       await screen.findByText("Message envoyé !");
+       setTimeout(() => {
+        screen.findByText("Message envoyé !");
+          
+      },1500 );
     });
   });
 });
