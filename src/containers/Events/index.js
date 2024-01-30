@@ -4,7 +4,6 @@ import Select from "../../components/Select";
 import { useData } from "../../contexts/DataContext";
 import Modal from "../Modal";
 import ModalEvent from "../ModalEvent";
-
 import "./style.css";
 
 const PER_PAGE = 9;
@@ -15,24 +14,22 @@ const EventList = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   const filteredEvents = (
+    /***  Ajout filter en fonction du type  ***/
     (!type
-      ? data?.events
-      : // Ajout filter en fonction du type ( code avant modif -:data?.events) || []-)
-        data?.events.filter((event) => event.type === type)) || []
+      ? data?.events :
+      data?.events.filter((event) => event.type === type)) || []
   )
-    // vérifier si la variable type est définie. Si type n'est pas défini (!type est vrai),
-    // Tous les événements (data?.events) sont renvoyés.
-    // Sinon, les événements sont filtrés pour inclure uniquement ceux dont le type correspond à la valeur de type.
+
+    /***  Utilisation de la méthode filter pour sélectionner les éléments qui correspondent à certaines conditions ***/
     .filter((event, index) => {
       if (
-        (currentPage - 1) * PER_PAGE <= index &&
-        PER_PAGE * currentPage > index
+        (currentPage - 1) * PER_PAGE <= index && PER_PAGE * currentPage > index
       ) {
         return true;
       }
-
       return false;
     });
+
   const changeType = (evtType) => {
     setCurrentPage(1);
     setType(evtType);

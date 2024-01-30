@@ -6,19 +6,18 @@ import Button, { BUTTON_TYPES } from "../../components/Button";
 
 
 const mockContactApi = () => new Promise((resolve) => { setTimeout(resolve, 1000); })
-
-
 const Form = ({ onSuccess, onError }) => {
   const [sending, setSending] = useState(false);
   const sendContact = useCallback(
     async (evt) => {
       evt.preventDefault();
       setSending(true);
-      // We try to call mockContactApi
+      /*** Appeler la fonction mockContactApi (simulant une requête à une API) ***/
       try {
         await mockContactApi();
         setSending(false);
-        onSuccess(); // Add onSuccess is called if mockContactApi succeed
+        /*** Appelle la fonction onSuccess si mockContactApi réussit  ***/
+        onSuccess(); 
       } catch (err) {
         setSending(false);
         onError(err);
@@ -55,18 +54,12 @@ const Form = ({ onSuccess, onError }) => {
     </form>
   );
 };
-
-
 Form.propTypes = {
   onError: PropTypes.func,
   onSuccess: PropTypes.func,
 }
-
-
 Form.defaultProps = {
   onError: () => null,
   onSuccess: () => null,
 }
-
-
 export default Form;

@@ -14,11 +14,10 @@ import { useData } from "../../contexts/DataContext";
 
 const Page = () => {
   const { data } = useData();
-  // const qui vient chercher la dernière prestation
-  const last =
-    data && data.events && data.events.length > 0
+  /***  const qui vient chercher la dernière prestation ***/
+  const last = data && data.events && data.events.length > 0
       ? data.events.reduce((latest, current) => {
-        // Utiliser la date pour comparer et trouver la prestation la plus récente
+        /***  Utiliser la date pour comparer et trouver la prestation la plus récente  ***/
         const latestDate = new Date(latest.date);
         const currentDate = new Date(current.date);
         return currentDate > latestDate ? current : latest;
@@ -127,7 +126,9 @@ const Page = () => {
       <footer className="row">
         <div className="col presta">
           <h3>Notre derniére prestation</h3>
+        
           {last && (
+             /***  Vérifier si la variable 'last' existe ***/
             <EventCard
               data-testid="last-event-card"
               imageSrc={last?.cover}
